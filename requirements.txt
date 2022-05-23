@@ -1,4 +1,8 @@
+pip
 flask
 redis
 postgres
-python-dotenv==0.20.0
+Flask
+psycopg2-binary
+python-dotenv
+virtualenv

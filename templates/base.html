@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %}- FlaskApp</title>
+    <title>{% block title %} {% endblock %}- Docker-Compose </title>
     <style>
         nav a {
-            color: #d64161;
-            font-size: 3em;
+            color: #083b4b;
+            font-size: 12px;
             margin-left: 50px;
-            text-decoration: none;
+            text-decoration-color: burlywood;
+            text-align: center;
         }
 
-        .book {
+        .user {
             padding: 20px;
             margin: 10px;
-            background-color: #f7f4f4;
+            background-color: #10475a;
+            text-decoration-color: aliceblue;
         }
 
         .review {
@@ -22,12 +24,41 @@
                 font-size: 20px;
         }
 
+        div {
+            width: 350px;
+            height: 400px;
+            align-content: center;
+            text-decoration-color: #083b4b;
+            justify-content: left;
+            top:0;
+            margin-left: auto; 
+            margin-right: auto;
+            border-style: solid; 
+            border-width: 1px; 
+            border-color: #14486b;
+            background-color: #e0e6e9;
+        }
+        
+        h3 {
+	        font-family: Verdana, Arial, Helvetica, sans-serif;
+	        font-size: 24px;
+	        color: #092642;
+	        text-align: center;
+        }
+
+        h1 {
+	        font-family: Verdana, Arial, Helvetica, sans-serif;
+	        font-size: 18px;
+	        color: #092642;
+	        text-align: center;
+        }
+        
     </style>
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="#">About</a>
+        <!--<a href="{{ url_for('index') }}">Docker-Compose</a> -->
+        <h3 >Docker-Compose Final Project</h3>
     </nav>
     <hr>
     <div class="content">

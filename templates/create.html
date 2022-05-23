@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{% block title %} Add a New User {% endblock %}</h1>
+<form method="post">
+    <p>
+        <label for="name">Name: </label>
+        <input type="text" name="name" placeholder="Name ">
+        </input>
+    </p>
+    <br>
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" name="email" placeholder="Email ">
+        </input>
+    </p>
+    <br>
+    <p>
+        <label for="password">Password: </label>
+        <input type="text" name="password" placeholder="Password ">
+        </input>
+    </p>
+    <br>
+    <p>
+        <button style="background-color: #326c9c; color: #e3f1f0; font-size: medium" type="submit" name="action"
+            value="sql">SAVE TO
+            POSTGRESQL</button>
+    </p>
+
+    <p>
+        <button style="background-color: #326c9c; color: #e3f1f0; font-size: medium" type="submit" name="action"
+            value="cache">SAVE TO
+            CACHE</button>
+    </p>
+</form>
+
+{% for counter in counters %}
+<h3>{{counter}}</h3>
+{% endfor %}
+{% endblock %}

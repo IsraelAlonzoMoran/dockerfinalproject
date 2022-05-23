@@ -1,27 +1,21 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
-load_dotenv()  # take environment variables from .env.
-# Code of your application, which uses environment variables (e.g. from `os.environ` or
-# `os.getenv`) as if they came from the actual environment.
-conn = psycopg2.connect(
-        #POSTGRES_DB="dccompose_db", POSTGRES_USER="dccompose_user", POSTGRES_PASSWORD="postgrespass"
 
-                          host="localhost",
-                            database="dccompose_db",
-                            user=os.environ['PG_DATABASE'],
-                            password=os.environ['PG_PASSWORD'])
+load_dotenv()  # Required to load the previously defined environment variables
 
-#"dbname=dccompose_db user=os.environ['PG_USER'] password=postgrespass port=5432")
-        #host="localhost",
-        #database="flask_db",
-        #user=os.environ['DB_USERNAME'],
-        #password=os.environ['DB_PASSWORD']
+# Create connection to postgres
+conn = psycopg2.connect(host='postgres', port=5432,
+                        user=os.environ['DB_USERNAME'],
+                        password=os.environ['DB_PASSWORD'],
+                        dbname=os.environ['PG_DATABASE'])
+
 
 # Open a cursor to perform database operations
 cur = conn.cursor()
 
 # Execute a command: this creates a new table
+
 cur.execute('DROP TABLE IF EXISTS users;')
 cur.execute('CREATE TABLE users (id serial PRIMARY KEY,'
                                  'name varchar (100) NOT NULL,'

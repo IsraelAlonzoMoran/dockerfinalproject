@@ -1,53 +1,60 @@
-version: '3.3'
+version: '3.9'
 services:
+
   redis:
     image: redis:7.0.0
-    container_name: dcompose_redis
+    container_name: container_redis
     restart: always
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
-      - redis_data:/data
+      - 'redis_data:/data'
     networks:
-      - docker-project
+      - project
+
   postgres:
     image: postgres:14.2
-    container_name: dcompose_postgres
+    container_name: container_postgres
     restart: always
+    env_file:
+      - '.env'
     environment:
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=/run/secrets/pgdb_password
       - POSTGRES_DB=${PG_DATABASE}
       - DATABASE_HOST=${PG_HOST}
-    expose:
-      - 5432
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
-      - pg_data:/var/lib/postgresql/data
-    networks:
-      - docker-project
-    secrets:
+      - 'postgres:/var/lib/postgresql/data'
+    networks: 
+      - project
+    secrets:  
       - pgdb_password
+
   web:
     build: .
-    container_name: dcompose_app
-    #restart: always
+    container_name: container_app
+    env_file:
+      - '.env'
     volumes:
       - .:/code
     ports:
-      - "5000:5000"
+      - '5000:5000'
     depends_on:
       - postgres
       - redis
     networks:
-      - docker-project
+      - project
+
 networks:
-  docker-project:
+  project:
     driver: bridge
+
 volumes:
-  pg_data:
+  postgres:
   redis_data:
+
 secrets:
   pgdb_password:
     file: ./pgdb_password.txt

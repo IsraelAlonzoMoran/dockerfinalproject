@@ -1,30 +1,29 @@
+from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, redirect
+
+# ...
+import redis
 import os
 import psycopg2
-import postgres
 from dotenv import load_dotenv
-load_dotenv()  # take environment variables from .env.
+
+load_dotenv()  # Required to load the previously defined environment variables
+# take environment variables from .env.
 # Code of your application, which uses environment variables (e.g. from `os.environ` or
 # `os.getenv`) as if they came from the actual environment.
-from flask import Flask, render_template
 
 app = Flask(__name__)
 
-def get_db_connection():
-    conn = psycopg2.connect(
-                            #="dccompose_db", POSTGRES_USER="dccompose_user", POSTGRES_PASSWORD="postgrespass")
-                            #"dbname=dccompose_db user=os.environ['PG_USER'] password=postgrespass port=5432")
-                            #host='localhost',
-                            #database='flask_db',
-                            #user=os.environ['DB_USERNAME'],
-                            #password=os.environ['DB_PASSWORD']) 
-                            #port="5432",
-                            host="localhost",
-                            database="dccompose_db",
-                            user=os.environ['PG_DATABASE'],
-                            password=os.environ['PG_PASSWORD'])
 
-                        
+def get_db_connection():
+    conn = psycopg2.connect(host='postgres', port=5432,
+                            user=os.environ['DB_USERNAME'],
+                            password=os.environ['DB_PASSWORD'],
+                            dbname=os.environ['PG_DATABASE'])
+
     return conn
+
+
 @app.route('/')
 def index():
     conn = get_db_connection()
@@ -36,31 +35,60 @@ def index():
     return render_template('index.html', users=users)
 
 
-#--------------------------------------
-"""
-import time
+# ...
+# To show the total users entered in the PostgreSQL table
+# @app.route('/create/', methods=('GET', 'POST'))
+def counter():
+    res = []
 
-import redis
-from flask import Flask
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT count(*) FROM users;')
+    userstotal = cur.fetchall()
+    print("value:", userstotal)
+    cur.close()
+    conn.close()
+    counters = userstotal
+    sql = counters[0]
+    res.append(sql[0])
+    #here goes redis
+    cache = redis.Redis(host='redis', port=6379)
+    try:
+        res.append(cache.get('counter').decode('utf-8'))
+    except redis.exceptions.ConnectionError as exc:
+        if retries == 0:
+            raise exc
+        retries -= 1
+    return res
+# ...
 
-app = Flask(__name__)
-cache = redis.Redis(host='redis', port=6379)
 
+def postSql():
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
 
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('INSERT INTO users (name, email, password)'
+                'VALUES (%s, %s, %s)',
+                (name, email, password))
+    conn.commit()
+    cur.close()
+    conn.close()
 
+def postCache():
+    cache = redis.Redis(host='redis', port=6379)
+    res = cache.incr("counter")
+    return res
 
-@app.route('/')
-def hello():
-    count = get_hit_count()
-    return 'Hello World! I have been seen {} times.\n'.format(count)
-"""
+@app.route('/create/', methods=('GET', 'POST'))
+def create():
+    
+    if request.method == 'POST':
+        if request.form['action'] == 'sql':
+            postSql()
+        else:
+            postCache()
+    counters = counter()   
+    return render_template('create.html', counters=counters)
