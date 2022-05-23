@@ -1,0 +1,6 @@
+**/__pycache__
+**/__pypackages__
+pgdb_password.txt
+Dockerfile
+README.md
+docker-compose.yml
