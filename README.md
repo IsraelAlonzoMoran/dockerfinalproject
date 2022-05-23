@@ -11,6 +11,15 @@ CREATE USER nclouds_user WITH PASSWORD 'nclouds_password';
 GRANT ALL PRIVILEGES ON DATABASE nclouds_db to nclouds_user;
 
 ```
+
+Run the following command `sudo apt upate`
+
+```bash
+
+
+```
+[This link:](https://ddd.com)
+
 # Install pip 
 sudo apt install python3-pip
 # Install Flask Flask psycopg2-binary with the below command //make sure to be with the termimal inside your project directory
