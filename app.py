@@ -90,5 +90,7 @@ def create():
             postSql()
         else:
             postCache()
-    counters = counter()   
-    return render_template('create.html', counters=counters)
+    counters = counter()
+    sql = counters[0]
+    cache = counters[1]
+    return render_template('create.html', sql=sql, cache=cache)

@@ -22,18 +22,18 @@
     <br>
     <p>
         <button style="background-color: #326c9c; color: #e3f1f0; font-size: medium" type="submit" name="action"
-            value="sql">SAVE TO
-            POSTGRESQL</button>
+            value="sql">SAVE TO POSTGRESQL </button>
     </p>
 
     <p>
         <button style="background-color: #326c9c; color: #e3f1f0; font-size: medium" type="submit" name="action"
-            value="cache">SAVE TO
-            CACHE</button>
+            value="cache">SAVE TO CACHE </button>
     </p>
 </form>
+<p>
+    <label > Items stored in PostgreSQL: {{sql}}</label>
+    <br>
+    <label > Items stored in Cache: {{cache}}</label>
+</p>
 
-{% for counter in counters %}
-<h3>{{counter}}</h3>
-{% endfor %}
 {% endblock %}
