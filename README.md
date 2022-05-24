@@ -1,106 +1,131 @@
-# NCLOUDS | Docker + Docker Compose
+# | Docker + Docker-compose | Final Project
+# Project description:
+This is an application infrastructure in a local environment using Docker and Docker-compose.
 
-## Database
+This application infrastructure consist of 3 containers that are going to be created using docker-compose, for this infrastructure a network is going to be created using the file docker-compose.yml. The 3 containers are going to be in the same network, cause the Web Server container needs to communicate with PostgreSQL and Redis.
 
-### Configuration
+Containers: 
+* Web Server(python:3.7-alpine, Flask)
+* PostgreSQL:14.2 for the Relational database engine.
+* Redis:7.0.0 as cache engine
+# This is the main project screen
+Each time data is typed and save the Items stored is going to increase by 1, based on the button selected to save.
 
+Use the following link to display the Form that needs to be use to
+create the users.(Make sure to include "/create/ as showing below.
 
-```sql
-CREATE DATABASE nclouds_db;
-CREATE USER nclouds_user WITH PASSWORD 'nclouds_password';
-GRANT ALL PRIVILEGES ON DATABASE nclouds_db to nclouds_user;
+[http://localhost:5000/create/](http://localhost:5000/create/)
 
-```
+![Main Project Screen](./images/main.PNG)
 
-Run the following command `sudo apt upate`
-
+#For the commands in this project use "sudo" at the beginning of each command if root permissions required.
+### Command to clone the repository from GitHub.
 ```bash
-
+git clone https://github.com/IsraelAlonzoMoran/dockerfinalproject.git
 
 ```
-[This link:](https://ddd.com)
+### Command to pull the Web Server image from Docker Hub.
+```bash
+docker pull israelalonzomoran/docker-compose-final-project:latest
 
-# Install pip 
-sudo apt install python3-pip
-# Install Flask Flask psycopg2-binary with the below command //make sure to be with the termimal inside your project directory
-# this why this dependencies are installed inside your project folder
-pip install Flask psycopg2-binary
+```
+### Docker Secrets
+Open the project folder and create a .txt file. For example: pgdb_password.txt and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine.
 
-# Install python-dotenv to allow using the variables that are inside .env 
-pip install python-dotenv
 #
-pip freeze > requirements.txt
-
-# Export 
-export FLASK_ENV=app
-export FLASK_ENV=development
-# then build the docker-compose infrastructure
+Before running the docker-compose commands make sure the terminal is showing that you are inside the project directory/path if not move to the project directory then run the commands.
+#
+### Below command to pull the Images for each container if still not in host machine and same time creates the containers.
+```bash
 docker-compose build
-# then start the services with docker-compose up
+
+```
+### Below command to run/start the containers.
+```bash
 docker-compose up
 
-docker images
+```
+Open a terminal and enter the below command to show the 3 running containers.
+
+```bash
 docker ps
-#docker-postgres(is the container name)
-docker exec -it compose_postgres psql -U compose_user compose_db
-compose_db=# \du        
+
+```
+
+#### Enter to PostgreSQL container and CREATE a new user called "frontenduser" with password "frontendpass" and GRANT permissions to the new user this user is going to be used for the application to connect to the PostgreSQL. Container name "container_postgres", PostgreSQL user "dccompose_user" and PostgreSQL database name "dccompose_db".
+
+```bash
+docker exec -it container_postgres psql -U dccompose_user dccompose_db
+``` 
+
+## Database
+### Configuration
+```sql
 CREATE USER frontenduser WITH PASSWORD 'frontendpass';
-GRANT ALL PRIVILEGES ON DATABASE compose_db TO frontenduser;
+GRANT ALL PRIVILEGES ON DATABASE dccompose_db to frontenduser;
+```
+### When still inside the PostgreSQL batabase, type "\dt" to see if the database table "users" is been created, if not create it with the below script.
 
-ebian% docker exec -it compose_postgres psql -U compose_user compose_db 
-psql (14.2 (Debian 14.2-1.pgdg110+1))
-Type "help" for help.
+```sql
+CREATE TABLE users ( 
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    date_added date DEFAULT CURRENT_TIMESTAMP
+);
+```
+Type the below script just to make sure the table columns were created, no rows but is going to show the table columns.
+```sql
+select * from users;
 
-compose_db=# \du
-                                     List of roles
-  Role name   |                         Attributes                         | Member of 
---------------+------------------------------------------------------------+-----------
- compose_user | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+```
+Insert a row to the table "users" for test only.
+```sql
+INSERT INTO users (name, email, password) 
+VALUES('Test Only', 'test@gmail.com', 'test12345');
+```
 
-compose_db=# \list
-                                       List of databases
-    Name    |    Owner     | Encoding |  Collate   |   Ctype    |       Access privileges       
-------------+--------------+----------+------------+------------+-------------------------------
- compose_db | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | 
- postgres   | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | 
- template0  | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | =c/compose_user              +
-            |              |          |            |            | compose_user=CTc/compose_user
- template1  | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | =c/compose_user              +
-            |              |          |            |            | compose_user=CTc/compose_user
-(4 rows)
+### Export (Make sure the terminal position is exactly inside the project directory)
+export DB_USERNAME=frontenduser
 
-compose_db=# \dt
-Did not find any relations.
-compose_db=# CREATE USER frontenduser WITH PASSWORD 'frontendpass';
-CREATE ROLE
-compose_db=# GRANT ALL PRIVILEGES ON DATABASE compose_db TO frontenduser;
-GRANT
-compose_db=# \l
-                                       List of databases
-    Name    |    Owner     | Encoding |  Collate   |   Ctype    |       Access privileges       
-------------+--------------+----------+------------+------------+-------------------------------
- compose_db | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | =Tc/compose_user             +
-            |              |          |            |            | compose_user=CTc/compose_user+
-            |              |          |            |            | frontenduser=CTc/compose_user
- postgres   | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | 
- template0  | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | =c/compose_user              +
-            |              |          |            |            | compose_user=CTc/compose_user
- template1  | compose_user | UTF8     | en_US.utf8 | en_US.utf8 | =c/compose_user              +
-            |              |          |            |            | compose_user=CTc/compose_user
-(4 rows)
+export DB_PASSWORD=frontendpass
 
-compose_db=# \q
+export FLASK_ENV=app
 
-
-
-# Export Flask app and development(make sure you are with the terminal inside your project directory)
-export FLASK_APP=app
 export FLASK_ENV=development
-# Export the username and and password as well
-export DB_USERNAME="your user name"
-export DB_PASSWORD="your password"
+### Now stop and then build the docker-compose infrastructure again.
+```bash
+docker-compose build
+```
+### Then start the services with docker-compose up
+```bash
+docker-compose up
+```
+## Now lest do the test.
+### While the 3 containers running, visit the following URL using your browser:
+[http://localhost:5000/create/](http://localhost:5000/create/)
 
-# With the development server running, visit the following URL using your browser:
-http://127.0.0.1:5000/
+### Adding New Users. This is the main screen.
+![Main Project Screen](./images/main.PNG)
 
-# Adding New Users
+#
+PostgreSQL showing 31 Items stored. This is before inserting a new user and saving it by clicking to "SAVE  TO POSTGRESQL".
+
+![Main Project Screen](./images/BeforePostgreSQLinsert.PNG)
+#
+Now PostgreSQL showing 32 Items stored. This is after inserting a new user and saving it by clicking to "SAVE  TO POSTGRESQL".
+
+![Main Project Screen](./images/AfterPostgresSQLinsert.PNG)
+#
+Redis showing 14 Items stored. This is before inserting a new user and saving it by clicking to "SAVE  TO CACHE".
+
+![Main Project Screen](./images/BeforeCacheinsert.PNG)
+#
+Now Redis showing 15 Items stored. This is after inserting a new user and saving it by clicking to "SAVE  TO CACHE".
+
+![Main Project Screen](./images/AfterCacheinsert.PNG)
+
+With this test we proved that the 3 containers are in the same network, we did it using docker-compose.
+
+This is all, thank you.
