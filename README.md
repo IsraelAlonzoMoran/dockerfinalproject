@@ -9,7 +9,7 @@ Containers:
 * PostgreSQL:14.2 for the Relational database engine.
 * Redis:7.0.0 as cache engine
 # This is the main project screen
-Each time data is typed and save the Items stored is going to increase by 1, based on the button selected to save.
+Each time data is typed and save the "Item stored" is going to increase by 1, based on the button selected to save.
 
 Use the following link to display the Form that needs to be use to
 create the users.(Make sure to include "/create/ as showing below.
