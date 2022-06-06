@@ -24,13 +24,19 @@ create the users.(Make sure to include "/create/ as showing below.
 git clone https://github.com/IsraelAlonzoMoran/dockerfinalproject.git
 
 ```
+Then type "cd dockerfinalproject" to move to the project directory.
+```bash
+cd dockerfinalproject
+
+```
+
 ### Command to pull the Web Server image from Docker Hub.
 ```bash
 docker pull israelalonzomoran/docker-compose-final-project:latest
 
 ```
 ### Docker Secrets
-Open the project folder and create a .txt file. For example: pgdb_password.txt and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine.
+Open the project folder and create a .txt file. Name it as `pgdb_password.txt` and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine.
 
 #
 Before running the docker-compose commands make sure the terminal is showing that you are inside the project directory/path if not move to the project directory then run the commands.
@@ -62,9 +68,9 @@ docker exec -it container_postgres psql -U dccompose_user dccompose_db
 ### Configuration
 ```sql
 CREATE USER frontenduser WITH PASSWORD 'frontendpass';
-GRANT ALL PRIVILEGES ON DATABASE dccompose_db to frontenduser;
+GRANT ALL PRIVILEGES ON DATABASE dccompose_db TO frontenduser;
 ```
-### When still inside the PostgreSQL batabase, type "\dt" to see if the database table "users" is been created, if not create it with the below script.
+### When still inside the PostgreSQL batabase, create the "users" table, create it with the below script.
 
 ```sql
 CREATE TABLE users ( 
@@ -80,21 +86,36 @@ Type the below script just to make sure the table columns were created, no rows 
 select * from users;
 
 ```
+While still inside the PostgreSQL batabase "dccompose_db", GRANT permissions to the table created "users"
+for the "frontenduser" to be able to manage it.
+
+```bash
+GRANT ALL PRIVILEGES ON users TO frontenduser;
+GRANT ALL ON SEQUENCE users_id_seq TO frontenduser;
+```
 Insert a row to the table "users" for test only.
 ```sql
 INSERT INTO users (name, email, password) 
 VALUES('Test Only', 'test@gmail.com', 'test12345');
 ```
-
-### Export (Make sure the terminal position is exactly inside the project directory)
+Now lets go to the project folder. While inside the project directory "dockerfinalproject".
+### Export (Make sure the terminal position is exactly inside the project directory).
+Type the command, then hit Enter.
+```bash
 export DB_USERNAME=frontenduser
-
+```
+```bash
 export DB_PASSWORD=frontendpass
-
+```
+```bash
 export FLASK_ENV=app
-
+```
+```bash
 export FLASK_ENV=development
-### Now stop and then build the docker-compose infrastructure again.
+```
+
+##Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running `Ctrl + C`
+###Then build the docker-compose infrastructure again.
 ```bash
 docker-compose build
 ```

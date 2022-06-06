@@ -54,7 +54,8 @@ def counter():
     #here goes redis
     cache = redis.Redis(host='redis', port=6379)
     try:
-        res.append(cache.get('counter').decode('utf-8'))
+        res.append(cache.get('counter'))
+        #res.append(cache.get('counter').decode('utf-8'))
     except redis.exceptions.ConnectionError as exc:
         if retries == 0:
             raise exc
