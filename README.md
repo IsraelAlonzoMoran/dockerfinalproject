@@ -114,7 +114,7 @@ export FLASK_ENV=app
 export FLASK_ENV=development
 ```
 
-### Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running `Ctrl + C`
+#### Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running, to stop it type `Ctrl + C`
 ### Then build the docker-compose infrastructure again.
 ```bash
 docker-compose build
@@ -124,7 +124,7 @@ docker-compose build
 docker-compose up
 ```
 ## Now lest do the test.
-### While the 3 containers running, visit the following URL using your browser:
+#### While the 3 containers running, visit the following URL using your browser:
 [http://localhost:5000/create/](http://localhost:5000/create/)
 
 ### Adding New Users. This is the main screen.
