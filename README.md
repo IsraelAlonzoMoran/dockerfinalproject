@@ -30,7 +30,7 @@ cd dockerfinalproject
 
 ```
 ### Docker Secrets
-Open the project folder "dockerfinalproject" and create a .txt file inside it. Name it as `pgdb_password.txt` and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine. You can copy and paste it inside the `pgdb_password.txt`. Password Example:
+Open the project folder "dockerfinalproject" and create a .txt file inside it. Name it as `pgdb_password.txt` and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine. You can copy the password below and paste it inside the `pgdb_password.txt`. Password Example:
 
 ```bash
 postgrespass
