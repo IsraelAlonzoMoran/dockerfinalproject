@@ -88,7 +88,7 @@ select * from users;
 ```
 #### While still inside the PostgreSQL batabase "dccompose_db", GRANT permissions to the table created "users" for the "frontenduser" to be able to manage it.
 
-```bash
+```sql
 GRANT ALL PRIVILEGES ON users TO frontenduser;
 GRANT ALL ON SEQUENCE users_id_seq TO frontenduser;
 ```
