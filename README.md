@@ -70,7 +70,7 @@ docker exec -it container_postgres psql -U dccompose_user dccompose_db
 CREATE USER frontenduser WITH PASSWORD 'frontendpass';
 GRANT ALL PRIVILEGES ON DATABASE dccompose_db TO frontenduser;
 ```
-### When still inside the PostgreSQL batabase, create the "users" table, create it with the below script.
+#### When still inside the PostgreSQL batabase, create the "users" table, create it with the below script.
 
 ```sql
 CREATE TABLE users ( 
