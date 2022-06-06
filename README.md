@@ -114,8 +114,8 @@ export FLASK_ENV=app
 export FLASK_ENV=development
 ```
 
-##Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running `Ctrl + C`
-###Then build the docker-compose infrastructure again.
+## Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running `Ctrl + C`
+### Then build the docker-compose infrastructure again.
 ```bash
 docker-compose build
 ```
