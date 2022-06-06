@@ -29,12 +29,6 @@ Then type "cd dockerfinalproject" to move to the project directory.
 cd dockerfinalproject
 
 ```
-
-### Command to pull the Web Server image from Docker Hub.
-```bash
-docker pull israelalonzomoran/docker-compose-final-project:latest
-
-```
 ### Docker Secrets
 Open the project folder and create a .txt file. Name it as `pgdb_password.txt` and inside the pgdb_password.txt file enter your secret password this password is going to be use to manage the PostgresSQL relational database engine.
 
@@ -92,11 +86,6 @@ select * from users;
 GRANT ALL PRIVILEGES ON users TO frontenduser;
 GRANT ALL ON SEQUENCE users_id_seq TO frontenduser;
 ```
-Insert a row to the table "users" for test only.
-```sql
-INSERT INTO users (name, email, password) 
-VALUES('Test Only', 'test@gmail.com', 'test12345');
-```
 Now lets go to the project folder. While inside the project directory "dockerfinalproject".
 ### Export (Make sure the terminal position is exactly inside the project directory).
 Type the command, then hit Enter.
@@ -113,7 +102,7 @@ export FLASK_ENV=app
 export FLASK_ENV=development
 ```
 
-#### Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running, to stop it type `Ctrl + C`
+#### Go to project directory terminal(terminal where `docker-compose up` was ran before) and Stop the 3 containers that are running, to stop it, just type `Ctrl + C` in your keyboard .
 ### Then build the docker-compose infrastructure again.
 ```bash
 docker-compose build
@@ -123,7 +112,7 @@ docker-compose build
 docker-compose up
 ```
 ## Now lest do the test.
-#### While the 3 containers running, visit the following URL using your browser:
+#### While the 3 containers are running again, visit the following URL using your browser: Google Chrome for Example:
 [http://localhost:5000/create/](http://localhost:5000/create/)
 
 ### Adding New Users. This is the main screen.
@@ -148,4 +137,4 @@ Now Redis showing 15 Items stored. This is after inserting a new user and saving
 
 With this test we proved that the 3 containers are in the same network, we did it using docker-compose.
 
-This is all, thank you.
+That's all, thank you for your time.

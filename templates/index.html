@@ -1,13 +1,80 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="es">
 
-{% block content %}
-    <h1>{% block title %} Users {% endblock %}</h1>
-    {% for user in users %}
-        <div class='user'>
-            <h3>#{{ user[0] }} - {{ user[1] }} - {{ user[2] }}</h3>
-            <i><p>({{ user[3] }})</p></i>
-            <i><p>Added {{ user[4] }}</p></i>
-        </div>
-    {% endfor %}
+<head>
+    <meta charset="UTF-8" />
+    <title>Table for Users Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        h1 {
+            font-size: 18px;
+            color: #083b4b;
+        }
 
-{% endblock %}
+        h2 {
+            font-size: 14px;
+            color: #083b4b;
+        }
+
+        table {
+            padding: 10px;
+            border: 1px solid #083b4b;
+            border-collapse: collapse;
+            background-color: aliceblue;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #083b4b;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    {% block title %}
+    <h2>
+        Users Data from PostgreSQL Database, Table "Users", for visibility only.
+        <br>
+        Below is going to be shown the Users Data you enter in the Form "Create".
+    </h2>
+    <h1>
+        Note: To Test this Docker-Compose Final Project Clic here: <A
+            HREF="http://localhost:5000/create/">http://localhost:5000/create/</A>
+    </h1>
+    {% endblock %}
+
+
+    <header>
+        <main>
+            <h2>Users Data From Table "Users" Listed Below</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User_ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Creation_Date</th>
+                    </tr>
+                </thead>
+                {% for user in users %}
+                <tbody>
+                    <tr>
+                        <td>{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                        <td>{{ user[4] }}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </main>
+    </header>
+</body>
+
+</html>

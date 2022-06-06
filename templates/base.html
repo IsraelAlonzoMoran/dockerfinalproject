@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}- Docker-Compose </title>
@@ -20,8 +21,8 @@
         }
 
         .review {
-                margin-left: 50px;
-                font-size: 20px;
+            margin-left: 50px;
+            font-size: 20px;
         }
 
         div {
@@ -30,38 +31,39 @@
             align-content: center;
             text-decoration-color: #083b4b;
             justify-content: left;
-            top:0;
-            margin-left: auto; 
+            top: 0;
+            margin-left: auto;
             margin-right: auto;
-            border-style: solid; 
-            border-width: 1px; 
+            border-style: solid;
+            border-width: 1px;
             border-color: #14486b;
             background-color: #e0e6e9;
         }
-        
+
         h3 {
-	        font-family: Verdana, Arial, Helvetica, sans-serif;
-	        font-size: 24px;
-	        color: #092642;
-	        text-align: center;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            color: #092642;
+            text-align: center;
         }
 
         h1 {
-	        font-family: Verdana, Arial, Helvetica, sans-serif;
-	        font-size: 18px;
-	        color: #092642;
-	        text-align: center;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            color: #092642;
+            text-align: center;
         }
-        
     </style>
 </head>
+
 <body>
     <nav>
-        <h3 >Docker-Compose Final Project</h3>
+        <h3>Docker-Compose Final Project</h3>
     </nav>
     <hr>
     <div class="content">
         {% block content %} {% endblock %}
     </div>
 </body>
+
 </html>

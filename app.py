@@ -51,11 +51,11 @@ def counter():
     counters = userstotal
     sql = counters[0]
     res.append(sql[0])
-    #here goes redis
-    cache = redis.Redis(host='redis', port=6379)
+    # here goes redis
+    cache = redis.StrictRedis(host='redis', port=6379, decode_responses=True)
     try:
-        res.append(cache.get('counter'))
-        #res.append(cache.get('counter').decode('utf-8'))
+        res.append(cache.get('counter') or "0")
+        # res.append(cache.get('counter').decode('utf-8'))
     except redis.exceptions.ConnectionError as exc:
         if retries == 0:
             raise exc
@@ -78,14 +78,16 @@ def postSql():
     cur.close()
     conn.close()
 
+
 def postCache():
     cache = redis.Redis(host='redis', port=6379)
     res = cache.incr("counter")
     return res
 
+
 @app.route('/create/', methods=('GET', 'POST'))
 def create():
-    
+
     if request.method == 'POST':
         if request.form['action'] == 'sql':
             postSql()
