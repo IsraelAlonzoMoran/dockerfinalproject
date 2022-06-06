@@ -86,8 +86,7 @@ Type the below script just to make sure the table columns were created, no rows 
 select * from users;
 
 ```
-#### While still inside the PostgreSQL batabase "dccompose_db", GRANT permissions to the table created "users"
-for the "frontenduser" to be able to manage it.
+#### While still inside the PostgreSQL batabase "dccompose_db", GRANT permissions to the table created "users" for the "frontenduser" to be able to manage it.
 
 ```bash
 GRANT ALL PRIVILEGES ON users TO frontenduser;
